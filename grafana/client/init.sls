@@ -7,7 +7,7 @@ include:
 {%- for datasource_name, datasource in client.datasource.iteritems() %}
 
 grafana_client_datasource_{{ datasource_name }}:
-  grafana3_datasource.present:
+  grafana4_datasource.present:
   - name: {{ datasource_name }}
   - type: {{ datasource.type }}
   - url: http://{{ datasource.host }}:{{ datasource.get('port', 80) }}
@@ -68,7 +68,7 @@ grafana_client_datasource_{{ datasource_name }}:
 {%- for dashboard_name, dashboard in final_dict.iteritems() %}
   {%- if dashboard.get('enabled', True) %}
 grafana_client_dashboard_{{ dashboard_name }}:
-  grafana3_dashboard.present:
+  grafana4_dashboard.present:
   - name: {{ dashboard_name }}
     {%- if dashboard.get('format', 'yaml')|lower == 'json' %}
     {%- import_json dashboard.template as dash %}
@@ -88,7 +88,7 @@ grafana_client_dashboard_{{ dashboard_name }}:
     {%- endif %}
   {%- else %}
 grafana_client_dashboard_{{ dashboard_name }}:
-  grafana3_dashboard.absent:
+  grafana4_dashboard.absent:
   - name: {{ dashboard_name }}
   {%- endif %}
 {%- endfor %}
